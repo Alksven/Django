@@ -59,3 +59,6 @@ def create_product(request: HttpRequest):
     }
 
     return render(request, 'shopapp/create-product.html',  context=context)
+
+
+
