@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
 
 from .forms import ProductForm, GroupForm
 from .models import Product, Order
@@ -38,30 +38,27 @@ class GroupsListView(View):
         return redirect(request.path)
 
 
-class ProductDetailsView(View):
-    def get(self, request: HttpRequest, pk: int) -> HttpResponse:
-        product = get_object_or_404(Product, pk=pk)
-        context = {
-            'product': product,
-        }
-        return render(request, 'shopapp/product-details.html', context=context)
+class ProductDetailsView(DetailView):
+    template_name = 'shopapp/product-details.html'
+    model = Product
+    context_object_name = "products"
 
 
-class ProductListVies(TemplateView):
+class ProductListVies(ListView):
     template_name = 'shopapp/products-list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["products"] = Product.objects.all()
-        return context
+    model = Product
+    context_object_name = "products"
 
 
-def orders_list(request: HttpRequest):
-    context = {
-        'orders': Order.objects.select_related('user').prefetch_related('products').all(),
-    }
+class OrdersListVies(ListView):
+    queryset = Order.objects.select_related('user').prefetch_related('products')
 
-    return render(request, 'shopapp/orders-list.html',  context=context)
+
+class OrderDetailsView(DetailView):
+    queryset = Order.objects.select_related('user').prefetch_related('products')
+
+
+
 
 
 def create_product(request: HttpRequest):
