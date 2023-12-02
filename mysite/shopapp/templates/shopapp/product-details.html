@@ -17,6 +17,10 @@
     </div>
 
     <div>
+    <a href="{% url 'shopapp:product-archive' pk=products.pk %}">Archive Product</a>
+    </div>
+
+    <div>
     <a href="{% url 'shopapp:products_list' %}">Back to products list</a>
     </div>
 {% endblock %}
