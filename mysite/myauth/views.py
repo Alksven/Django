@@ -1,8 +1,28 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LogoutView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
+from django.views.generic import TemplateView, CreateView
+
+
+class RegisterView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'myauth/register.html'
+    success_url = reverse_lazy('myauth:about-me')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password1")
+        user = authenticate(self.request, username=username, password=password)
+        login(request=self.request, user=user)
+        return response
+
+
+class AboutMeView(TemplateView):
+    template_name = 'myauth/about-me.html'
 
 
 def login_view(request: HttpRequest):
@@ -30,6 +50,7 @@ def logout_view(request: HttpRequest):
 
 class MyLogoutView(LogoutView):
     next_page = reverse_lazy("myauth:login")
+
 
 def set_cookie_view(request: HttpRequest) -> HttpResponse:
     response = HttpResponse("Cookie set")

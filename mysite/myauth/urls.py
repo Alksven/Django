@@ -9,6 +9,8 @@ urlpatterns = [
     path("login/", LoginView.as_view(template_name="myauth/login.html", redirect_authenticated_user=True), name='login'),
     # path("logout/", views.logout_view, name='logout'),
     path("logout/", views.MyLogoutView.as_view(), name='logout'),
+    path("about-me/", views.AboutMeView.as_view(), name='about-me'),
+    path("register/", views.RegisterView.as_view(), name='register'),
     path("cookie/get/", views.get_cookie_view, name='cookie-get'),
     path("cookie/set/", views.set_cookie_view, name='cookie-set'),
     path("session/get/", views.get_session_view, name='session-get'),
