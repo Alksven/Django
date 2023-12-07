@@ -9,6 +9,8 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 import timeit
 
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+
 
 class ShopIndexView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
@@ -52,7 +54,10 @@ class ProductListVies(ListView):
     queryset = Product.objects.filter(archived=False)
 
 
-class ProductCreateVies(CreateView):
+class ProductCreateVies(UserPassesTestMixin, CreateView):
+    def test_func(self):
+        # return self.request.user.groups.filter(name="secret_group").exists()
+        return self.request.user.is_superuser
     model = Product
     fields = "name", "price", "description", "discount"
     success_url = reverse_lazy("shopapp:products_list")
@@ -81,9 +86,10 @@ class ProductDeleteVies(DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class OrdersListVies(ListView):
+class OrdersListVies(LoginRequiredMixin, ListView):
     queryset = Order.objects.select_related('user').prefetch_related('products')
 
 
-class OrderDetailsView(DetailView):
+class OrderDetailsView(PermissionRequiredMixin, DetailView):
+    permission_required = "shopapp.view_order"
     queryset = Order.objects.select_related('user').prefetch_related('products')
