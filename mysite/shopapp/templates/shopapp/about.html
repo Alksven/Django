@@ -1,0 +1,19 @@
+{% extends "shopapp/base.html" %}
+
+{% block title %}shop about{% endblock %}
+
+{% block body %}
+
+<h1>О нашей компании </h1>
+<div>
+    <p>
+        {% if text|length > 312 %}
+        Текст слишком длинный ({{ text|length }} символов ). Используйте не более 312 знаков
+        {% else %}
+            {{ text }}
+        {% endif %}
+    </p>
+
+</div>
+
+{% endblock %}

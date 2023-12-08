@@ -1,11 +1,11 @@
-{% extends 'shopapp/base.html' %}
+{% extends "shopapp/base.html" %}
 
 {% block title %}
-    Create product
+    Create Product
 {% endblock %}
 
 {% block body %}
-    <h1>Create a new product</h1>
+    <h1>Create a new Product</h1>
     <div>
         <form method="post">
             {% csrf_token %}
@@ -13,7 +13,7 @@
             <button type="submit">Create</button>
         </form>
     </div>
-<div>
-    <a href="{% url 'shopapp:products_list' %}">Back to Products list</a>
-</div>
+    <div>
+        <a href="{% url 'shopapp:products_list' %}">Back to products list</a>
+    </div>
 {% endblock %}

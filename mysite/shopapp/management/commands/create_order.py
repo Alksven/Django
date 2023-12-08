@@ -5,14 +5,17 @@ from shopapp.models import Order
 
 
 class Command(BaseCommand):
-    """Create Order"""
+    """
+     Create Order
+    """
 
     def handle(self, *args, **options):
-        self.stdout.write("Create Order")
+        self.stdout.write("Create order")
         user = User.objects.get(username="admin")
         order = Order.objects.get_or_create(
-            delivery_address="ul Pupkina 35",
+            delivery_address="Lenina, 21",
             promocode="SALE123",
             user=user
         )
-        self.stdout.write(f'Created order {order}')
+
+        self.stdout.write(self.style.SUCCESS(f"Products created {order}"))

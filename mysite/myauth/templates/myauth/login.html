@@ -1,15 +1,13 @@
-{% extends 'requestdataapp/base.html' %}
+{% extends 'myauth/base.html' %}
 
 {% block title %}
-    Login
+login
 {% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <button type="submit">Login</button>
-    </form>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>
 {% endblock %}

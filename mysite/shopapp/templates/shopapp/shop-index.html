@@ -1,24 +1,25 @@
-{% extends 'shopapp/base.html' %}
+{% extends "shopapp/base.html" %}
 
-{% block title %}
-    index title
-{% endblock %}
+
+{% block title %}shop index{% endblock %}
 
 {% block body %}
-    index body
+
+<h1>Список нашей техники</h1>
 <div>
     <ul>
         {% for name, price in products %}
-            <li>{{ name }} for ${{ price }}</li>
+        <li>{{ name }} for {{ price }} </li>
+        {% if name|length_is:"7" %}
+        <span>Lucky product:</span>
+        {% endif %}
         {% empty %}
-            No products
-        {% endfor%}
+            No products here
+        {% endfor %}
     </ul>
 </div>
 <div>
-    {% lorem 3 p random %}
+    Time running {{ time_running }}
 </div>
-<div>
-    {{ time }}
-</div>
+
 {% endblock %}

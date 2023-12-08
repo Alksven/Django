@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>
-        {% block title %}
-        Base title
-        {% endblock %}
+      {% block title %}
+      Base Title
+      {% endblock %}
     </title>
 </head>
 <body>
-    {% block body %}
-    Base body!
-    {% endblock %}
+      {% block body %}
+      Base body
+      {% endblock %}
+
 <div>
-    {% now 'H:i' %}
+    <br>
+    Текущее время {% now 'H:i' %}
 </div>
+<div>
+    {% include "shopapp/media.html" %}
+</div>
+
 </body>
 </html>

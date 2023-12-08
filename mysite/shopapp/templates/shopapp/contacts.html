@@ -1,0 +1,21 @@
+{% extends "shopapp/base.html" %}
+
+{% block title %}contact{% endblock %}
+
+{% block body %}
+<h1>Контакты нашей компании</h1>
+        <p>Телефон: 8(800)2000-600</p>
+        <p>Email: 111@mail.ru</p>
+        <p>Адреса офисов</p>
+        <p>Всего {{ addresses | length }} aдреса</p>
+    <ul>
+        {% for address in addresses %}
+        <li> {{ address }} </li>
+        {% empty %}
+            Пока не открыто ни одного мазагина
+        {% endfor %}
+
+    </ul>
+
+
+{% endblock %}

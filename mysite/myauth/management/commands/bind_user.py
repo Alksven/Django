@@ -3,21 +3,24 @@ from django.core.management import BaseCommand
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        user = User.objects.get(pk=3)
+        user = User.objects.get(pk=5)
         group, created = Group.objects.get_or_create(
-            name="profile_manager"
+            name="profile_manager",
         )
         permission_profile = Permission.objects.get(
             codename="view_profile"
         )
         permission_logentry = Permission.objects.get(
-            codename="view_logentry"
+            codename="view_logentry",
         )
-        # добавить разрешение в гурппу
+
+        # Добавление разрешения в гурппу
         group.permissions.add(permission_profile)
-        # присоединения пользователя к группе
+
+        # Присоединение пользователя в гурппе
         user.groups.add(group)
-        # связь пользователя напрямую с разрешением
+
+        # Связать пользователя напрямую с разрешением
         user.user_permissions.add(permission_logentry)
 
         group.save()

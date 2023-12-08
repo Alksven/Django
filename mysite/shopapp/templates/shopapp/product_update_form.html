@@ -1,11 +1,11 @@
-{% extends 'shopapp/base.html' %}
+{% extends "shopapp/base.html" %}
 
 {% block title %}
-    Update product
+    Update Product
 {% endblock %}
 
 {% block body %}
-    <h1>Update product</h1>
+    <h1>Update Product</h1>
     <div>
         <form method="post">
             {% csrf_token %}
@@ -13,7 +13,7 @@
             <button type="submit">Update</button>
         </form>
     </div>
-<div>
-    <a href="{% url 'shopapp:product_details' pk=object.pk %}">Back to Product #{{ object.pk }}</a>
-</div>
+    <div>
+        <a href="{% url 'shopapp:products_details' pk=object.pk %}">Back to product #{{ object.pk }}</a>
+    </div>
 {% endblock %}
