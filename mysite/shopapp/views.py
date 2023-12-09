@@ -56,8 +56,8 @@ class ProductsListView(ListView):
     queryset = Product.objects.filter(archived=False)
 
 
-class ProductCreateView(PermissionRequiredMixin, CreateView):
-    permission_required = "shopapp.add_product"
+class ProductCreateView(CreateView):
+    # permission_required = "shopapp.add_product"
     model = Product
     fields = "name", "price", "description", "diccount"
     success_url = reverse_lazy("shopapp:products_list")
