@@ -1,6 +1,7 @@
 from string import ascii_letters
 from random import choices
 
+from django.contrib.auth.models import Permission
 from django.test import Client
 
 from django.contrib.auth import get_user_model
@@ -26,6 +27,7 @@ class ProductCreateViewTestCase(TestCase):
             username='testuser',
             password='testpass'
         )
+        self.user.user_permissions.add(Permission.objects.get(codename='add_product'))
         self.client.force_login(self.user)
 
         self.product_name = "".join(choices(ascii_letters, k=10))
@@ -75,3 +77,14 @@ class ProductDetailsViewTestCase(TestCase):
             reverse("shopapp:products_details", kwargs={"pk": self.product.pk})
         )
         self.assertContains(response, self.product.name)
+
+
+class ProductsListViewTestCase(TestCase):
+    fixtures = [
+        "products-fixture.json"
+    ]
+
+    def test_products(self):
+        resource = self.client.get(reverse("shopapp:products_list"))
+        for product in Product.objects.filter(archived=False).all():
+            self.assertContains(resource, product.name)

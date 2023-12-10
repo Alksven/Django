@@ -1,0 +1,210 @@
+[
+  {
+    "model": "shopapp.product",
+    "pk": 1,
+    "fields": {
+      "name": "Laptop (new)1",
+      "description": "Ноутбук - портативное устройство.",
+      "price": "2030.00",
+      "diccount": 15,
+      "created_at": "2023-07-17T10:16:54.904Z",
+      "archived": false,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 2,
+    "fields": {
+      "name": "Desktop (new)",
+      "description": "Desktop (new)",
+      "price": "2599.00",
+      "diccount": 10,
+      "created_at": "2023-07-17T10:16:54.904Z",
+      "archived": true,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 3,
+    "fields": {
+      "name": "Smartphone",
+      "description": "Смартфон - это многофункциональное устройство, которое объединяет в себе функции телефона и компьютера. Он оснащен сенсорным экраном, который позволяет пользователю взаимодействовать с различными приложениями и функциями. Смартфоны обычно имеют возможность подключения к интернету через Wi-Fi или мобильную сеть, что позволяет получать доступ к различным онлайн-сервисам, социальным сетям, электронной почте и многому другому.",
+      "price": "987.00",
+      "diccount": 25,
+      "created_at": "2023-07-17T10:16:54.904Z",
+      "archived": false,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 5,
+    "fields": {
+      "name": "phone2",
+      "description": "fasdf\r\ngreat",
+      "price": "1234.00",
+      "diccount": 0,
+      "created_at": "2023-08-07T16:41:25.961Z",
+      "archived": false,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 6,
+    "fields": {
+      "name": "Tablet 3",
+      "description": "it is tablet",
+      "price": "1234.00",
+      "diccount": 5,
+      "created_at": "2023-08-08T16:11:25.689Z",
+      "archived": true,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 7,
+    "fields": {
+      "name": "Смартфон",
+      "description": "Новый Смартфон 2023",
+      "price": "1000.00",
+      "diccount": 0,
+      "created_at": "2023-08-28T14:57:28.115Z",
+      "archived": false,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 8,
+    "fields": {
+      "name": "Телефон",
+      "description": "Телефон нокиа",
+      "price": "2000.00",
+      "diccount": 12,
+      "created_at": "2023-08-28T15:13:31.612Z",
+      "archived": false,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 9,
+    "fields": {
+      "name": "Телевизор",
+      "description": "Телевизор samsung",
+      "price": "1000.00",
+      "diccount": 0,
+      "created_at": "2023-08-28T15:17:33.144Z",
+      "archived": false,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 10,
+    "fields": {
+      "name": "Монитор",
+      "description": "Монитор Монитор",
+      "price": "111.00",
+      "diccount": 0,
+      "created_at": "2023-08-28T15:52:37.117Z",
+      "archived": false,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 11,
+    "fields": {
+      "name": "Телефон333",
+      "description": "Телефон333Телефон333",
+      "price": "333.00",
+      "diccount": 0,
+      "created_at": "2023-08-28T16:44:12.822Z",
+      "archived": false,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 12,
+    "fields": {
+      "name": "Косилка",
+      "description": "Косилка зеленая",
+      "price": "999.00",
+      "diccount": 5,
+      "created_at": "2023-08-28T16:46:44.109Z",
+      "archived": false,
+      "created_by": 2
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 13,
+    "fields": {
+      "name": "Стиралка",
+      "description": "Стиралка стирает",
+      "price": "999.00",
+      "diccount": 0,
+      "created_at": "2023-08-28T17:08:51.667Z",
+      "archived": false,
+      "created_by": 3
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 14,
+    "fields": {
+      "name": "Разетка",
+      "description": "Разетка основная",
+      "price": "1.00",
+      "diccount": 0,
+      "created_at": "2023-08-28T17:12:09.572Z",
+      "archived": false,
+      "created_by": 6
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 15,
+    "fields": {
+      "name": "ноутбук",
+      "description": "ноутбук 2023",
+      "price": "111.00",
+      "diccount": 0,
+      "created_at": "2023-08-29T14:48:05.030Z",
+      "archived": false,
+      "created_by": 5
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 16,
+    "fields": {
+      "name": "Телефон2023",
+      "description": "Телефон2023",
+      "price": "111.00",
+      "diccount": 0,
+      "created_at": "2023-08-29T14:48:54.956Z",
+      "archived": false,
+      "created_by": 3
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 17,
+    "fields": {
+      "name": "Телефон2022",
+      "description": "Телефон2022Телефон2022",
+      "price": "999.00",
+      "diccount": 0,
+      "created_at": "2023-08-29T14:53:19.850Z",
+      "archived": false,
+      "created_by": 5
+    }
+  }
+]
