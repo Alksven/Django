@@ -1,7 +1,9 @@
 from string import ascii_letters
 from random import choices
 
-from django.contrib.auth.models import Permission
+from django.conf import settings
+
+from django.contrib.auth.models import Permission, User
 from django.test import Client
 
 from django.contrib.auth import get_user_model
@@ -81,10 +83,44 @@ class ProductDetailsViewTestCase(TestCase):
 
 class ProductsListViewTestCase(TestCase):
     fixtures = [
-        "products-fixture.json"
+        "products-fixture.json",
     ]
 
     def test_products(self):
         resource = self.client.get(reverse("shopapp:products_list"))
-        for product in Product.objects.filter(archived=False).all():
-            self.assertContains(resource, product.name)
+        self.assertQuerysetEqual(
+            qs=Product.objects.filter(archived=False).all(),
+            values=(p.pk for p in resource.context["products"]),
+            transform=lambda p: p.pk
+        )
+        self.assertTemplateUsed(resource, "shopapp/products-list.html")
+
+
+class OrderListViewTestCase(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.user = User.objects.create_user(username="TestUser", password="TestPassword")
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.delete()
+
+    def setUp(self):
+        self.client.force_login(self.user)
+
+    def test_order_list_view(self):
+        response = self.client.get(reverse("shopapp:orders_list"))
+        self.assertContains(response, "Orders")
+
+    def test_order_list_view_not_authenticated(self):
+        self.client.logout()
+        response = self.client.get(reverse("shopapp:orders_list"))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(str(settings.LOGIN_URL), response.url)
+
+
+
+
+
+
