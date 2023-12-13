@@ -175,7 +175,7 @@ class OrderDetailsViewTestCase(TestCase):
         self.assertEqual(response.context["order"].pk, self.order.pk)
 
 
-class OrdersExportTestCase(TestCase):
+class OrdersExportViewTestCase(TestCase):
     fixtures = [
         "products-fixture.json",
         "users-fixture.json"
@@ -185,7 +185,7 @@ class OrdersExportTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.user = User.objects.create_user(username="TestUser", password="TestPassword")
-        # cls.user.user_permissions.add(Permission.objects.get(codename='view_order'))
+        cls.user.user_permissions.add(Permission.objects.get(codename='view_order'))
 
     @classmethod
     def tearDownClass(cls):
@@ -194,9 +194,26 @@ class OrdersExportTestCase(TestCase):
     def setUp(self):
         self.client.force_login(self.user)
 
-    def test_orders_export_view(self):
+    def test_get_product_view(self):
         response = self.client.get(
-            reverse("shopapp:order_export"),
+            reverse("shopapp:orders_export"),
         )
-
         self.assertEqual(response.status_code, 200)
+
+        orders = Order.objects.order_by("pk").all()
+        expected_data = [
+            {
+                "pk": order.pk,
+                "delivery_address": order.delivery_address,
+                "promocode": order.promocode,
+                "user": order.user,
+                "products": order.products
+
+            }
+            for order in orders
+        ]
+        order_data = response.json()
+        self.assertEqual(
+            order_data["orders"],
+            expected_data
+        )
