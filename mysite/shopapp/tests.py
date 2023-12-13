@@ -12,7 +12,7 @@ from django.urls import reverse
 
 from shopapp.utils import add_two_numbers
 
-from shopapp.models import Product
+from shopapp.models import Product, Order
 
 
 class AddTwoNumbersTestCase(TestCase):
@@ -147,3 +147,56 @@ class ProductExportViewTestCase(TestCase):
         )
 
 
+class OrderDetailsViewTestCase(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.user = User.objects.create_user(username="TestUser", password="TestPassword")
+        cls.user.user_permissions.add(Permission.objects.get(codename='view_order'))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.delete()
+
+    def setUp(self):
+        self.client.force_login(self.user)
+        self.order = Order.objects.create(user=self.user)
+
+    def tearDown(self):
+        self.order.delete()
+
+    def test_order_details_view(self):
+        response = self.client.get(
+            reverse("shopapp:order_details", kwargs={"pk": self.order.pk}),
+        )
+
+        self.assertContains(response, "Delivery address")
+        self.assertContains(response, "PromoCode")
+        self.assertEqual(response.context["order"].pk, self.order.pk)
+
+
+class OrdersExportTestCase(TestCase):
+    fixtures = [
+        "products-fixture.json",
+        "users-fixture.json"
+        "order-fixture.json"
+    ]
+
+    @classmethod
+    def setUpClass(cls):
+        cls.user = User.objects.create_user(username="TestUser", password="TestPassword")
+        # cls.user.user_permissions.add(Permission.objects.get(codename='view_order'))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.delete()
+
+    def setUp(self):
+        self.client.force_login(self.user)
+
+    def test_orders_export_view(self):
+        response = self.client.get(
+            reverse("shopapp:order_export"),
+        )
+
+        self.assertEqual(response.status_code, 200)
