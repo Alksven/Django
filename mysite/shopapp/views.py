@@ -145,6 +145,26 @@ class ProductExportView(View):
         return JsonResponse({"products": products_data})
 
 
+class OrdersDataExportView(PermissionRequiredMixin, View):
+    permission_required = "auth.view_user"
+
+    def get(self, request: HttpRequest) -> JsonResponse:
+        orders = Order.objects.order_by("pk").all()
+        orders_data = [
+            {
+                "pk": order.pk,
+                "delivery_address": order.delivery_address,
+                "promocode": order.promocode,
+                "user": order.user,
+                "products": order.products
+
+            }
+            for order in orders
+        ]
+
+        return JsonResponse({"orders": orders_data})
+
+
 
 def shop_about(request: HttpRequest):
     text_about = "Наша Компания - ваш надежный партнер в мире электроники!" \

@@ -185,7 +185,7 @@ class OrdersExportViewTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.user = User.objects.create_user(username="TestUser", password="TestPassword")
-        cls.user.user_permissions.add(Permission.objects.get(codename='view_order'))
+        cls.user.user_permissions.add(Permission.objects.get(codename='view_user'))
 
     @classmethod
     def tearDownClass(cls):
@@ -194,7 +194,7 @@ class OrdersExportViewTestCase(TestCase):
     def setUp(self):
         self.client.force_login(self.user)
 
-    def test_get_product_view(self):
+    def test_get_orders_view(self):
         response = self.client.get(
             reverse("shopapp:orders_export"),
         )
