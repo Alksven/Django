@@ -178,18 +178,20 @@ class OrderDetailsViewTestCase(TestCase):
 class OrdersExportViewTestCase(TestCase):
     fixtures = [
         "products-fixture.json",
-        "users-fixture.json"
+        "users-fixture.json",
         "order-fixture.json"
     ]
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.user = User.objects.create_user(username="TestUser", password="TestPassword")
         cls.user.user_permissions.add(Permission.objects.get(codename='view_user'))
 
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
+        super().tearDownClass()
 
     def setUp(self):
         self.client.force_login(self.user)
@@ -206,8 +208,8 @@ class OrdersExportViewTestCase(TestCase):
                 "pk": order.pk,
                 "delivery_address": order.delivery_address,
                 "promocode": order.promocode,
-                "user": order.user,
-                "products": order.products
+                "user": order.user.id,
+                "products": [product.id for product in order.products.all()]
 
             }
             for order in orders
