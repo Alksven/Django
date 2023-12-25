@@ -2,6 +2,13 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+def product_preview_directory_path(instance: "Product", filename: str) -> str:
+    return "products/product_{pk}/preview{filename}".format(
+        pk=instance.pk,
+        filename=filename
+    )
+
+
 class Product(models.Model):
     class Meta:
         ordering = ["name", "price"]
@@ -13,6 +20,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, default=2)
+    preview = models.ImageField(null=True, blank=True, upload_to=product_preview_directory_path)
 
     def __str__(self) -> str:
         return f"Product(pk={self.pk}, name={self.name!r}"
@@ -25,3 +33,4 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     products = models.ManyToManyField(Product, related_name="orders")
     archived = models.BooleanField(default=False)
+    receipt = models.FileField(null=True, upload_to='orders/receipts/')
