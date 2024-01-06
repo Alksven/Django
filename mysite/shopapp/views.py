@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from .models import Product, Order
+from .models import Product, Order, ProductImage
 
 from .forms import ProductForm, OrderForm, GroupForm
 
@@ -45,7 +45,8 @@ class GroupsListView(View):
 
 class ProductDetailsView(DetailView):
     template_name = "shopapp/product-details.html"
-    model = Product
+    # model = Product
+    queryset = Product.objects.prefetch_related("images")
     context_object_name = "product"
 
 
@@ -78,11 +79,40 @@ class ProductUpdateView(UserPassesTestMixin, UpdateView):
         return False
 
     model = Product
-    fields = "name", "price", "description", "diccount", "preview"
+    # fields = "name", "price", "description", "diccount", "preview"
     template_name_suffix = "_update_form"
+    form_class = ProductForm
 
     def get_success_url(self):
         return reverse("shopapp:products_details", kwargs={"pk": self.object.pk})
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    # def form_valid(self, form):
+    #     response = super().form_valid(form)
+    #     for image in form.feles.getlist("images"):
+    #         ProductImage.objects.create(
+    #             product=self.object,
+    #             image=image,
+    #         )
+    #     return response
+
+    def form_valid(self, form):
+        files = form.cleaned_data["images"]
+        response = super().form_valid(form)
+        for f in files:
+            ProductImage.objects.create(
+                product=self.object,
+                image=f,
+            )
+        return response
+
 
 
 class ProductDeleteView(DeleteView):
