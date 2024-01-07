@@ -94,15 +94,6 @@ class ProductUpdateView(UserPassesTestMixin, UpdateView):
         else:
             return self.form_invalid(form)
 
-    # def form_valid(self, form):
-    #     response = super().form_valid(form)
-    #     for image in form.feles.getlist("images"):
-    #         ProductImage.objects.create(
-    #             product=self.object,
-    #             image=image,
-    #         )
-    #     return response
-
     def form_valid(self, form):
         files = form.cleaned_data["images"]
         response = super().form_valid(form)

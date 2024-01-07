@@ -1,19 +1,39 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LogoutView
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView, ListView, DetailView
 
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 
 from .models import Profile
 
 
-class AboutMeView(TemplateView):
+
+class ProfileListView(ListView):
+    template_name = "myauth/profile-list.html"
+    model = User
+    context_object_name = 'profiles'
+    def get_queryset(self):
+        return User.objects.all()
+
+
+
+
+class AboutMeView(DetailView):
     template_name = "myauth/about-me.html"
+    model = User
+    # queryset = User.objects.prefetch_related("bio")
+    # context_object_name = "user"
+
+class AboutProfileView(DetailView):
+    template_name = "myauth/about-profile.html"
+    model = User
+    context_object_name = "profile"
 
 
 class RegisterView(CreateView):
@@ -29,6 +49,15 @@ class RegisterView(CreateView):
         user = authenticate(self.request, username=username, password=password)
         login(request=self.request, user=user)
         return resource
+
+
+class ProfileUpdateView(UpdateView):
+    model = User
+    template_name_suffix = "_update_form"
+    fields = "user", "bio", "avatar"
+    success_url = reverse_lazy("myauth:about-me")
+
+
 
 def login_view(request: HttpRequest):
     if request.method == "GET":
@@ -52,6 +81,15 @@ def logout_view(request: HttpRequest) -> HttpResponse:
 
 class MyLogoutView(LogoutView):
     next_page = reverse_lazy("myauth:login")
+
+
+
+
+
+
+
+
+
 
 
 @user_passes_test(lambda u: u.is_superuser)

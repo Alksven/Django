@@ -17,6 +17,9 @@ urlpatterns = [
 
     path("about-me/", views.AboutMeView.as_view(), name="about-me"),
     path("register/", views.RegisterView.as_view(), name="register"),
+    path("about-me/<int:pk>/update/", views.ProfileUpdateView.as_view(), name="profile_update"),
+    path("profiles/", views.ProfileListView.as_view(), name="profiles_list"),
+    path("about-profile/<int:pk>/", views.AboutProfileView.as_view(), name="about-profile"),
 
     # path("logout/", views.logout_view, name="logout"),
     path("logout/", views.MyLogoutView.as_view(), name="logout"),
